@@ -3,7 +3,10 @@ package es.grupogo.playgroundsdk;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -11,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -19,9 +23,10 @@ import java.util.List;
  * Created by Carlos Olmedo on 30/1/17.
  */
 
-public class DoButton extends Button implements View.OnClickListener, RequestHelper.RequestCallback<List<Action>>{
+public class DoButton extends ImageView implements View.OnClickListener, RequestHelper.RequestCallback<List<Action>>{
 
     private List<Action> actions;
+    private String query = "";
 
     public DoButton(Context context) {
         super(context);
@@ -39,10 +44,24 @@ public class DoButton extends Button implements View.OnClickListener, RequestHel
     }
 
 
-
     private void init() {
         setOnClickListener(this);
-        setText("Do!");
+        setImageResource(es.grupogo.playgroundsdk2.R.drawable.do_24dp);
+
+        if (Build.VERSION.SDK_INT >= 16){
+            int[] attrs = new int[] { android.R.attr.selectableItemBackground};
+            TypedArray ta = getContext().obtainStyledAttributes(attrs);
+            Drawable drawableFromTheme = ta.getDrawable(0);
+            ta.recycle();
+            setBackground(drawableFromTheme);
+        }
+
+        setScaleType(ScaleType.CENTER);
+
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
     }
 
     @Override
@@ -50,7 +69,7 @@ public class DoButton extends Button implements View.OnClickListener, RequestHel
         Toast.makeText(getContext(), "Do!", Toast.LENGTH_SHORT).show();
         RequestHelper requestHelper = RequestHelper.getInstance(view.getContext());
 
-        requestHelper.getActionsAsync("Pobreza", this);
+        requestHelper.getActionsAsync(query, this);
 
     }
 

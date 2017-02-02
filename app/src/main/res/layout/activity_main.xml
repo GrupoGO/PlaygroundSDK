@@ -11,9 +11,7 @@
     tools:context="es.grupogo.playgroundsdk.MainActivity">
 
     <es.grupogo.playgroundsdk.DoButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:drawableLeft="@drawable/do_24dp"
-        android:drawableStart="@drawable/do_24dp"/>
+        android:id="@+id/button_do"
+        android:layout_width="48dp"
+        android:layout_height="48dp"/>
 </RelativeLayout>
