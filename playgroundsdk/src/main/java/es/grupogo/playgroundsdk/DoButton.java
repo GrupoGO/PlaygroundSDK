@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import es.grupogo.awesomelibrary.BadgeView;
 import es.grupogo.awesomelibrary.utils.DrawableUtils;
 import es.grupogo.playgroundsdk2.R;
 
@@ -29,6 +32,44 @@ import es.grupogo.playgroundsdk2.R;
  */
 
 public class DoButton extends ImageView implements View.OnClickListener, RequestHelper.RequestCallback<List<Action>>{
+
+    private static class SavedState extends BaseSavedState {
+
+        String query;
+        int color;
+
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            query = in.readString();
+            color = in.readInt();
+
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeString(query);
+            out.writeInt(color);
+
+        }
+
+        public static final Parcelable.Creator<DoButton.SavedState> CREATOR
+                = new Parcelable.Creator<DoButton.SavedState>() {
+            public DoButton.SavedState createFromParcel(Parcel in) {
+                return new DoButton.SavedState(in);
+            }
+
+            public DoButton.SavedState[] newArray(int size) {
+                return new DoButton.SavedState[size];
+            }
+        };
+    }
+
 
     private List<Action> actions;
     private String query = "";
@@ -81,6 +122,26 @@ public class DoButton extends ImageView implements View.OnClickListener, Request
         }
 
         setScaleType(ScaleType.CENTER);
+
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+
+        Parcelable superState = super.onSaveInstanceState();
+        DoButton.SavedState ss = new DoButton.SavedState(superState);
+        ss.query = query;
+        ss.color = color;
+        return ss;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+
+        DoButton.SavedState ss = (DoButton.SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        query = ss.query;
+        color = ss.color;
 
     }
 
