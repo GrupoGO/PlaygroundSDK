@@ -15,5 +15,6 @@
         android:id="@+id/button_do"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        app:tint="#feafea"/>
+        app:tint="#feafea"
+        app:query="android"/>
 </RelativeLayout>
