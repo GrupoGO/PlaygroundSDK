@@ -133,7 +133,7 @@ public class RequestHelper {
 
     }
 
-    String getActions(String text) throws RequestException {
+    public String getActions(String text) throws RequestException {
 
         Call<String> historyCall = apiService.getActions("https://webintra.net/services/api/v2/get/", "Playground", "search", text, 3, null);
 
@@ -171,7 +171,7 @@ public class RequestHelper {
     }
 
 
-    void getActionsAsync(String text, final RequestCallback<List<Action>> callback) {
+    public void getActionsAsync(String text, final RequestCallback<List<Action>> callback) {
 
         Call<String> historyCall = apiService.getActions("https://webintra.net/services/api/v2/get/", "Playground", "search", text, 3, null);
 
