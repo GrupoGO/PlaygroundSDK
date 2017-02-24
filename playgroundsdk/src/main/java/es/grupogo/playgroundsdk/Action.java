@@ -1,5 +1,6 @@
 package es.grupogo.playgroundsdk;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -14,6 +15,7 @@ public class Action {
     @SerializedName("website") String website;
     @SerializedName("url") String url;
     @SerializedName("image") String image;
+    String actionType;
 
     public Action(String id) {
         this.id = id;
@@ -65,6 +67,14 @@ public class Action {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getType() {
+        return actionType;
+    }
+
+    public void setType(String type) {
+        this.actionType = type;
     }
 
     @Override

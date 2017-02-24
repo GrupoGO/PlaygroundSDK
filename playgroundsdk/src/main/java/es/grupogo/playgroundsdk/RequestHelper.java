@@ -56,9 +56,13 @@ public class RequestHelper {
         @GET
         Call<String> getActions(@Url String url, @Query("_api_name") String apiName, @Query("_method_name") String methodName, @Query("text") String text, @Query("size") int size, @Query("type") String type);
 
-
-
     }
+
+    public interface RequestCallback<T> {
+        void onResponse(T response);
+        void onFailure(Throwable t);
+    }
+
 
     private static RequestHelper mInstance = null;
     private static ValassisService apiService;
@@ -93,6 +97,14 @@ public class RequestHelper {
             }
             throw new JsonParseException("Unparseable date: \"" + jsonElement.getAsString()
                     + "\". Supported formats: \n" + Arrays.toString(DATE_FORMATS));
+        }
+    }
+
+    class ActionTypeDeserializer implements JsonDeserializer<Action> {
+
+        @Override
+        public Action deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return null;
         }
     }
 
@@ -165,10 +177,6 @@ public class RequestHelper {
 
     }
 
-    public interface RequestCallback<T> {
-        void onResponse(T response);
-        void onFailure(Throwable t);
-    }
 
 
     public void getActionsAsync(String text, final RequestCallback<List<Action>> callback) {
@@ -187,7 +195,9 @@ public class RequestHelper {
                         Gson gson = new GsonBuilder().create();
                         List<Action> actions = new ArrayList<>();
                         for (int i = 0; i < items.length(); i++) {
-                            actions.add(gson.fromJson(items.getJSONObject(i).toString(), Action.class));
+                            Action action = gson.fromJson(items.getJSONObject(i).toString(), Action.class);
+                            action.setType(items.getJSONObject(i).getJSONArray("type").getString(0));
+                            actions.add(action);
                         }
                         callback.onResponse(actions);
                     } catch (JSONException e) {
