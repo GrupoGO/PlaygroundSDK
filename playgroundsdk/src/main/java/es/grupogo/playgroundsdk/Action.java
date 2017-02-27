@@ -15,12 +15,12 @@ public class Action {
     @SerializedName("website") String website;
     @SerializedName("url") String url;
     @SerializedName("image") String image;
-    @SerializedName("category") String category;
-    @SerializedName("time") float time;
+    @SerializedName("time") int time;
     @SerializedName("metric") String metric;
-    @SerializedName("metric_quantity") float metricQuantity;
+    @SerializedName("metric_quantity") int metricQuantity;
     @SerializedName("pledges") int pledges;
-    String actionType;
+    @SerializedName("review") int review;
+    @SerializedName("type") String type;
 
     public Action(String id) {
         this.id = id;
@@ -75,26 +75,26 @@ public class Action {
     }
 
     public String getType() {
-        return actionType;
+        return type;
+    }
+
+    public int getReview() {
+        return review;
+    }
+
+    public void setReview(int review) {
+        this.review = review;
     }
 
     public void setType(String type) {
-        this.actionType = type;
+        this.type = type;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public float getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(float time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
@@ -106,11 +106,11 @@ public class Action {
         this.metric = metric;
     }
 
-    public float getMetricQuantity() {
+    public int getMetricQuantity() {
         return metricQuantity;
     }
 
-    public void setMetricQuantity(float metricQuantity) {
+    public void setMetricQuantity(int metricQuantity) {
         this.metricQuantity = metricQuantity;
     }
 
@@ -122,13 +122,6 @@ public class Action {
         this.pledges = pledges;
     }
 
-    public String getActionType() {
-        return actionType;
-    }
-
-    public void setActionType(String actionType) {
-        this.actionType = actionType;
-    }
 
     @Override
     public boolean equals(Object obj) {

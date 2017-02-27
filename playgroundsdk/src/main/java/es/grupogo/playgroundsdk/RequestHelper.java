@@ -195,9 +195,13 @@ public class RequestHelper {
                         Gson gson = new GsonBuilder().create();
                         List<Action> actions = new ArrayList<>();
                         for (int i = 0; i < items.length(); i++) {
-                            Action action = gson.fromJson(items.getJSONObject(i).toString(), Action.class);
-                            action.setType(items.getJSONObject(i).getJSONArray("type").getString(0));
-                            actions.add(action);
+                            try {
+                                Action action = gson.fromJson(items.getJSONObject(i).toString(), Action.class);
+                                actions.add(action);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.d("SDK", items.getJSONObject(i).toString());
+                            }
                         }
                         callback.onResponse(actions);
                     } catch (JSONException e) {
