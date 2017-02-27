@@ -15,6 +15,11 @@ public class Action {
     @SerializedName("website") String website;
     @SerializedName("url") String url;
     @SerializedName("image") String image;
+    @SerializedName("category") String category;
+    @SerializedName("time") float time;
+    @SerializedName("metric") String metric;
+    @SerializedName("metric_quantity") float metricQuantity;
+    @SerializedName("pledges") int pledges;
     String actionType;
 
     public Action(String id) {
@@ -75,6 +80,54 @@ public class Action {
 
     public void setType(String type) {
         this.actionType = type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public float getTime() {
+        return time;
+    }
+
+    public void setTime(float time) {
+        this.time = time;
+    }
+
+    public String getMetric() {
+        return metric;
+    }
+
+    public void setMetric(String metric) {
+        this.metric = metric;
+    }
+
+    public float getMetricQuantity() {
+        return metricQuantity;
+    }
+
+    public void setMetricQuantity(float metricQuantity) {
+        this.metricQuantity = metricQuantity;
+    }
+
+    public int getPledges() {
+        return pledges;
+    }
+
+    public void setPledges(int pledges) {
+        this.pledges = pledges;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
     }
 
     @Override
