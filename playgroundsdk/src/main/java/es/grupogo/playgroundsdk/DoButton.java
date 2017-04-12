@@ -197,4 +197,10 @@ public class DoButton extends ImageView implements View.OnClickListener, Request
     public void onFailure(Throwable t) {
 
     }
+
+    public static void getSocialActions(Context context, String query, RequestHelper.RequestCallback<List<Action>> callback) {
+        RequestHelper requestHelper = RequestHelper.getInstance(context);
+        requestHelper.getActionsAsync(query, callback);
+
+    }
 }
