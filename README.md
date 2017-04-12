@@ -16,7 +16,7 @@ You will also need to add this line in the dependencies of your build.gradle mod
 
 ```
 dependencies {
-    compile 'com.github.GrupoGO:playgroundsdk:1.1'
+    compile 'com.github.GrupoGO:playgroundsdk:1.6'
 }
 ```
 
