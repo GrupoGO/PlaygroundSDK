@@ -21,6 +21,7 @@ public class Action {
     @SerializedName("pledges") int pledges;
     @SerializedName("review") int review;
     @SerializedName("type") String type;
+    @SerializedName("cms_url") String cmsUrl;
 
     public Action(String id) {
         this.id = id;
@@ -122,6 +123,13 @@ public class Action {
         this.pledges = pledges;
     }
 
+    public String getCmsUrl() {
+        return cmsUrl;
+    }
+
+    public void setCmsUrl(String cmsUrl) {
+        this.cmsUrl = cmsUrl;
+    }
 
     @Override
     public boolean equals(Object obj) {

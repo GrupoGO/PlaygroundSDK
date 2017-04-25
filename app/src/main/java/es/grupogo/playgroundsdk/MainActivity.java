@@ -11,6 +11,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DoButton button = (DoButton) findViewById(R.id.button_do);
-        button.setQuery("sexo");
+        button.setQuery("machismo");
     }
 }
