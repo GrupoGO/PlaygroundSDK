@@ -1,5 +1,8 @@
 package es.grupogo.playgroundsdk;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Carlos Olmedo on 2/2/17.
  */
 
-public class Action {
+public class Action implements Parcelable{
 
     @SerializedName("id") String id;
     @SerializedName("title") String title;
@@ -26,6 +29,34 @@ public class Action {
     public Action(String id) {
         this.id = id;
     }
+
+    protected Action(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        description = in.readString();
+        website = in.readString();
+        url = in.readString();
+        image = in.readString();
+        time = in.readInt();
+        metric = in.readString();
+        metricQuantity = in.readInt();
+        pledges = in.readInt();
+        review = in.readInt();
+        type = in.readString();
+        cmsUrl = in.readString();
+    }
+
+    public static final Creator<Action> CREATOR = new Creator<Action>() {
+        @Override
+        public Action createFromParcel(Parcel in) {
+            return new Action(in);
+        }
+
+        @Override
+        public Action[] newArray(int size) {
+            return new Action[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -134,5 +165,27 @@ public class Action {
     @Override
     public boolean equals(Object obj) {
         return ((Action)obj).getId().equals(id);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(website);
+        dest.writeString(url);
+        dest.writeString(image);
+        dest.writeInt(time);
+        dest.writeString(metric);
+        dest.writeInt(metricQuantity);
+        dest.writeInt(pledges);
+        dest.writeInt(review);
+        dest.writeString(type);
+        dest.writeString(cmsUrl);
     }
 }
