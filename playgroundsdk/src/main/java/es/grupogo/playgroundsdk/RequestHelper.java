@@ -1,6 +1,7 @@
 package es.grupogo.playgroundsdk;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -25,7 +26,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,9 +35,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
@@ -47,14 +44,18 @@ import retrofit2.http.Url;
 
 public class RequestHelper {
 
-    private interface ValassisService {
+    private interface DoService {
 
         @Headers({
                 "Token: 59baef879d68f4af3c97c0269ed46200",
                 "Secret: b6cccc4e45422e84143cd6a8fa589eb4"
         })
-        @GET
-        Call<String> getActions(@Url String url, @Query("_api_name") String apiName, @Query("_method_name") String methodName, @Query("text") String text, @Query("size") int size, @Query("type") String type);
+        @GET("api/Playground/search")
+        Call<String> getActions(@Query("text") String text,
+                                @Query("size") int size,
+                                @Query("type") String type,
+                                @Query("website") String website,
+                                @Query("categories") String categories);
 
     }
 
@@ -65,7 +66,7 @@ public class RequestHelper {
 
 
     private static RequestHelper mInstance = null;
-    private static ValassisService apiService;
+    private static DoService apiService;
 
 
     public class RequestException extends Exception {
@@ -132,22 +133,22 @@ public class RequestHelper {
                 .create();
 
 
-        Retrofit retrofit3 = new Retrofit.Builder()
-                .baseUrl("https://webintra.net/services/api/v2/get/")
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://webintra.net/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(defaultOkHttpClient())
                 .build();
 
-        apiService = retrofit3.create(ValassisService.class);
+        apiService = retrofit.create(DoService.class);
 
 
 
     }
 
-    public String getActions(String text) throws RequestException {
+    public String getActions(String text, int quantity) throws RequestException {
 
-        Call<String> historyCall = apiService.getActions("https://webintra.net/services/api/v2/get/", "Playground", "search", text, 3, null);
+        Call<String> historyCall = apiService.getActions(text, quantity, null, null, null);
 
         try {
             Response<String> response = historyCall.execute();
@@ -179,9 +180,9 @@ public class RequestHelper {
 
 
 
-    public void getActionsAsync(String text, final RequestCallback<List<Action>> callback) {
+    public void getActionsAsync(@Nullable  String text, int quantity, @Nullable  String type, @Nullable  String website, @Nullable  String category, final RequestCallback<List<Action>> callback) {
 
-        Call<String> historyCall = apiService.getActions("https://webintra.net/services/api/v2/get/", "Playground", "search", text, 3, null);
+        Call<String> historyCall = apiService.getActions(text, quantity, type, website, category);
 
         historyCall.enqueue(new Callback<String>() {
             @Override

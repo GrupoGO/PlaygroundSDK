@@ -10,7 +10,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.PopupMenu;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -31,7 +33,7 @@ import es.grupogo.playgroundsdk2.R;
  * Created by Carlos Olmedo on 30/1/17.
  */
 
-public class DoButton extends ImageView implements View.OnClickListener, RequestHelper.RequestCallback<List<Action>>{
+public class DoButton extends AppCompatImageView implements View.OnClickListener, RequestHelper.RequestCallback<List<Action>>{
 
     private static class SavedState extends BaseSavedState {
 
@@ -161,7 +163,7 @@ public class DoButton extends ImageView implements View.OnClickListener, Request
         Toast.makeText(getContext(), "Do!", Toast.LENGTH_SHORT).show();
         RequestHelper requestHelper = RequestHelper.getInstance(view.getContext());
 
-        requestHelper.getActionsAsync(query, this);
+        requestHelper.getActionsAsync(query, 3, null, null, null, this);
 
     }
 
@@ -196,11 +198,14 @@ public class DoButton extends ImageView implements View.OnClickListener, Request
     @Override
     public void onFailure(Throwable t) {
 
+        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+        t.printStackTrace();
+
     }
 
-    public static void getSocialActions(Context context, String query, RequestHelper.RequestCallback<List<Action>> callback) {
+    public static void getSocialActions(Context context, String text, int quantity, String type,  String website,  String category, final RequestHelper.RequestCallback<List<Action>> callback) {
         RequestHelper requestHelper = RequestHelper.getInstance(context);
-        requestHelper.getActionsAsync(query, callback);
+        requestHelper.getActionsAsync(text, quantity, type, website, category, callback);
 
     }
 }
