@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by Carlos Olmedo on 2/2/17.
  */
@@ -25,10 +27,13 @@ public class Action implements Parcelable{
     @SerializedName("review") int review;
     @SerializedName("type") String type;
     @SerializedName("cms_url") String cmsUrl;
+    @SerializedName("category")
+    List<String> categories;
 
     public Action(String id) {
         this.id = id;
     }
+
 
     protected Action(Parcel in) {
         id = in.readString();
@@ -44,6 +49,7 @@ public class Action implements Parcelable{
         review = in.readInt();
         type = in.readString();
         cmsUrl = in.readString();
+        categories = in.createStringArrayList();
     }
 
     public static final Creator<Action> CREATOR = new Creator<Action>() {
@@ -57,6 +63,14 @@ public class Action implements Parcelable{
             return new Action[size];
         }
     };
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
 
     public String getId() {
         return id;
@@ -167,6 +181,7 @@ public class Action implements Parcelable{
         return ((Action)obj).getId().equals(id);
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -187,5 +202,6 @@ public class Action implements Parcelable{
         dest.writeInt(review);
         dest.writeString(type);
         dest.writeString(cmsUrl);
+        dest.writeStringList(categories);
     }
 }
