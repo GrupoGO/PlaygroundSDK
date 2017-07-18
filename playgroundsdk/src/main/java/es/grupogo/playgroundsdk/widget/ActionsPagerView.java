@@ -31,7 +31,12 @@ public class ActionsPagerView extends ConstraintLayout{
         @Override
         public void onActionClick(Action action) {
 
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action.getUrl()));
+            Intent browserIntent;
+            if(action.getUrl()==null || action.getUrl().equals("")){
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action.getCmsUrl()));
+            } else {
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action.getUrl()));
+            }
             getContext().startActivity(browserIntent);
         }
 
