@@ -26,10 +26,16 @@ public class MainActivity extends AppCompatActivity {
        // pagerView.setNumActions(3);
        // pagerView.setQuery("animals");
       //  pagerView.setPosition(40.489353842, -3.6827461);
+      //  pagerView.reloadActions();
 
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**  @Override
     protected void onResume() {
         super.onResume();
         if(actions==null){
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+   @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("actions", (ArrayList<Action>) pagerView.getActions());
@@ -49,5 +55,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         actions = savedInstanceState.getParcelableArrayList("actions");
-    }
+    }**/
 }
