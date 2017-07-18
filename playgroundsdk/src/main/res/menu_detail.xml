@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_do"
+        android:icon="@drawable/ic_do_24dp_black"
+        android:title="Do"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share_24dp_black"
+        android:title="Share"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_add_to_list"
+        android:icon="@drawable/ic_add_48dp_black"
+        android:title="Add"
+        app:showAsAction="always"/>
+
+
+</menu>
