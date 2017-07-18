@@ -55,6 +55,11 @@ public class ActionsRecyclerAdapter extends RecyclerView.Adapter<ActionViewHolde
         this.actions.addAll(actions);
         notifyDataSetChanged();
     }
+
+    public List<Action> getActions() {
+        return this.actions;
+    }
+
     public void setActions(List<Action> actions, boolean deleteable) {
         this.deleteable = deleteable;
         this.actions.clear();

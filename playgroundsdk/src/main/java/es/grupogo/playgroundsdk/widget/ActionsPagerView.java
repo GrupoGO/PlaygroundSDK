@@ -3,6 +3,9 @@ package es.grupogo.playgroundsdk.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.grupogo.playgroundsdk.Action;
@@ -26,6 +30,7 @@ public class ActionsPagerView extends ConstraintLayout{
     private String query = "";
     private int numActions = 10;
     private ActionsRecyclerAdapter adapter;
+    private ArrayList actionsSaved = new ArrayList<>();
 
     private ActionViewHolder.OnActionClickListener listener = new ActionViewHolder.OnActionClickListener() {
         @Override
@@ -61,13 +66,12 @@ public class ActionsPagerView extends ConstraintLayout{
         init();
     }
 
+
     private void init() {
 
         inflate(getContext(), R.layout.widget_pager_actions, this);
 
         setupRecycler();
-
-        reloadActions();
 
     }
 
@@ -101,5 +105,11 @@ public class ActionsPagerView extends ConstraintLayout{
         });
     }
 
+    public List<Action> getActions(){
+        return adapter.getActions();
+    }
 
+    public void setActions(List<Action> actions){
+        adapter.setActions(actions);
+    }
 }
