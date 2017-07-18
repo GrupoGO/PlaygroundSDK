@@ -53,10 +53,6 @@ public class ActionViewHolder extends RecyclerView.ViewHolder {
 
     TagContainerLayout mTagContainerLayout;
 
-   /* @BindDrawable(R.drawable.ic_do_24dp_black)
-    Drawable doIcon;
-    @BindDrawable(R.drawable.ic_done_24dp_black)
-    Drawable doneIcon;*/
 
     private static final int MAX_NUMBER_TAGS = 3;
 
