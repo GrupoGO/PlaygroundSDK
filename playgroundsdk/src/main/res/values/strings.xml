@@ -18,4 +18,7 @@
 
 
     <string name="type_done">Done</string>
+
+    <string name="what_is_it">What is it?</string>
+    <string name="go_to_website">Go to website</string>
 </resources>

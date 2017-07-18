@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import es.grupogo.playgroundsdk.Action;
+import es.grupogo.playgroundsdk.ActionDetailActivity;
 import es.grupogo.playgroundsdk.RequestHelper;
 import es.grupogo.playgroundsdk.RequestManager;
 import es.grupogo.playgroundsdk2.R;
@@ -31,13 +32,17 @@ public class ActionsPagerView extends ConstraintLayout{
         @Override
         public void onActionClick(Action action) {
 
-            Intent browserIntent;
+            /*Intent browserIntent;
             if(action.getUrl()==null || action.getUrl().equals("")){
                 browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action.getCmsUrl()));
             } else {
                 browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action.getUrl()));
             }
-            getContext().startActivity(browserIntent);
+            getContext().startActivity(browserIntent);*/
+
+            Intent intent = new Intent(getContext(), ActionDetailActivity.class);
+            intent.putExtra(ActionDetailActivity.EXTRA_ACTION, action);
+            getContext().startActivity(intent);
         }
 
         @Override
