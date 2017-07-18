@@ -62,10 +62,11 @@
             card_view:layout_constraintRight_toRightOf="parent"
             card_view:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <es.grupogo.playgroundsdk.custom.SuisseTextView
             android:id="@+id/textViewSite"
             style="@style/Base.TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
+            app:type="bold"
             android:layout_height="0dp"
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="8dp"
@@ -93,7 +94,7 @@
             card_view:layout_constraintLeft_toLeftOf="parent"/>
 
 
-        <TextView
+        <es.grupogo.playgroundsdk.custom.SuisseTextView
             android:id="@+id/textViewDescription"
             style="@style/Base.TextAppearance.AppCompat.Body1"
             android:layout_width="0dp"
@@ -102,6 +103,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
+            app:type="regular"
             android:lineSpacingExtra="2dp"
             android:lines="5"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
@@ -150,7 +152,7 @@
             card_view:layout_constraintLeft_toLeftOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/tagContainerLayout" />
 
-        <TextView
+        <es.grupogo.playgroundsdk.custom.SuisseTextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -161,7 +163,7 @@
             card_view:layout_constraintLeft_toLeftOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
-        <TextView
+        <es.grupogo.playgroundsdk.custom.SuisseTextView
             android:id="@+id/textViewPledgeNumber"
             android:layout_width="wrap_content"
             android:textColor="#000"
@@ -170,10 +172,11 @@
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="8dp"
             android:text="8"
+            app:type="bold"
             card_view:layout_constraintBottom_toBottomOf="@+id/textView8"
             card_view:layout_constraintLeft_toRightOf="@+id/textView8" />
 
-        <TextView
+        <es.grupogo.playgroundsdk.custom.SuisseTextView
             android:id="@+id/textViewPledge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -181,6 +184,7 @@
             android:layout_marginRight="8dp"
             android:padding="8dp"
             android:text="Pledge"
+            app:type="bold"
             android:drawablePadding="8dp"
             android:textAllCaps="true"
             android:gravity="center_vertical"

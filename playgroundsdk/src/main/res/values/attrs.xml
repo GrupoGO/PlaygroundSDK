@@ -5,6 +5,14 @@
         <attr name="query" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="SuisseTextView">
+        <attr name="type" format="enum">
+            <enum name="regular" value="0"/>
+            <enum name="bold" value="1"/>
+            <enum name="black" value="2"/>
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="PlaygroundWidget">
         <attr name="num_actions_widget" format="integer"/>
         <attr name="query_widget" format="string"/>
