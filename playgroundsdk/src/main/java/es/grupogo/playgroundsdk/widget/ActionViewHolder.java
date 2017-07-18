@@ -110,7 +110,7 @@ public class ActionViewHolder extends RecyclerView.ViewHolder {
         if (mTagContainerLayout != null) {
             mTagContainerLayout.removeAllTags();
             if (action.getCategories().size() == 0) {
-                mTagContainerLayout.setVisibility(View.GONE);
+                mTagContainerLayout.setVisibility(View.INVISIBLE);
             } else {
                 mTagContainerLayout.setVisibility(View.VISIBLE);
             }

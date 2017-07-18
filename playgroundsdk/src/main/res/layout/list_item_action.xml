@@ -199,8 +199,6 @@
             tools:layout_editor_absoluteX="160dp" />
 
 
-
-
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
 

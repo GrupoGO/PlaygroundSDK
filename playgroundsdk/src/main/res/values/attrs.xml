@@ -5,4 +5,11 @@
         <attr name="query" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="PlaygroundWidget">
+        <attr name="num_actions_widget" format="integer"/>
+        <attr name="query_widget" format="string"/>
+        <attr name="latitude_widget" format="string"/>
+        <attr name="longitude_widget" format="string"/>
+    </declare-styleable>
+
 </resources>

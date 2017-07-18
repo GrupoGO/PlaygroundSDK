@@ -23,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
         button.setQuery("mobile");
 
         pagerView = (ActionsPagerView) findViewById(R.id.pager);
-        pagerView.setNumActions(3);
-        pagerView.setQuery("animals");
+       // pagerView.setNumActions(3);
+       // pagerView.setQuery("animals");
+      //  pagerView.setPosition(40.489353842, -3.6827461);
 
     }
 

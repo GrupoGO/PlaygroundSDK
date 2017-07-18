@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,13 +46,26 @@ public class RequestManager {
                                 @Query("ids") String ids,
                                 @Query("type") String type,
                                 @Query("website") String website,
-                                @Query("categories") String categories);
+                                @Query("categories") String categories,
+                                @Query("min_lat") Double minLat,
+                                @Query("min_lng") Double minLng,
+                                @Query("max_lat") Double maxLat,
+                                @Query("max_lng") Double maxLng);
+    }
+
+    public interface GoogleApiService {
+
+        @GET("json")
+        Call<String> getRegionBounds(@Query("language") String language, @Query("sensor") String sensor, @Query("latlng") String latlng, @Query("result_type") String resultType, @Query("key") String key);
 
     }
 
+
     private static RequestManager mInstance = null;
     private static ApiService apiService;
+    private static GoogleApiService googleApiService;
     private static final String API_URL = "https://webintra.net/api/Playground/";
+    private static final String API_URL_GOOGLEMAPS = "https://maps.googleapis.com/maps/api/geocode/";
 
     private ConnectivityManager cm;
 
@@ -92,6 +108,14 @@ public class RequestManager {
                 .build();
 
         apiService = retrofit.create(ApiService.class);
+
+        Retrofit retrofitGoogle = new Retrofit.Builder()
+                .baseUrl(API_URL_GOOGLEMAPS)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(defaultOkHttpClient())
+                .build();
+        googleApiService = retrofitGoogle.create(GoogleApiService.class);
     }
 
     private static OkHttpClient defaultOkHttpClient() {
@@ -123,6 +147,8 @@ public class RequestManager {
                            @Nullable String type,
                            @Nullable String website,
                            @Nullable String category,
+                           @Nullable LatLng northeast,
+                           @Nullable LatLng southwest,
                            final RequestManager.RequestCallback<List<Action>> callback) {
 
         try {
@@ -146,8 +172,13 @@ public class RequestManager {
         }
 
         Call<String> historyCall;
-        historyCall = apiService.getActions(text, quantity, idsString, type, website, category);
+        if (northeast!=null && southwest!=null) {
+            historyCall = apiService.getActions(text, quantity, idsString, type, website, category, southwest.latitude, southwest.longitude, northeast.latitude, northeast.longitude);
 
+        } else {
+            historyCall = apiService.getActions(text, quantity, idsString, type, website, category, null,null,null,null);
+
+        }
 
 
         historyCall.enqueue(new Callback<String>() {
@@ -186,6 +217,102 @@ public class RequestManager {
                 t.printStackTrace();
                 callback.onFailure(new RequestManager.RequestException("An error has occurred"));
 
+            }
+        });
+    }
+
+    public void getRegionBounds(final double latitude, final double longitude, final RequestCallback<LatLngBounds> callback ){
+
+        try {
+            checkConnection();
+        } catch (ConnectionException e) {
+            e.printStackTrace();
+            // callback.onFailure(e);
+            return;
+        }
+
+        String language = "en";
+        String sensor = "false";
+        String result_type = "administrative_area_level_1";
+        String key = "AIzaSyBxL5CwUDj15cnfFP0PbEr0k8nq6Po3gEw";
+        String latlng = String.valueOf(latitude) + "," + String.valueOf(longitude);
+
+
+        Call<String> getBoundsCall = googleApiService.getRegionBounds(language, sensor, latlng, result_type, key);
+
+        getBoundsCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body());
+                        if(jsonObject.optString("status")!=null && jsonObject.optString("status").equals("ZERO_RESULTS")){ //No results -> Locality call
+                            getRegionBoundsLocality(latitude, longitude, callback);
+                        } else {
+                            LatLngBounds latLngBounds = JSONParserHelper.parseRegionBounds(jsonObject);
+                            callback.onResponse(latLngBounds);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        callback.onFailure(new RequestManager.RequestException("An error has occurred"));
+                    }
+                } else {
+                    Log.e("request", response.errorBody().toString());
+                    callback.onFailure(new RequestManager.RequestException("An error has occurred"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                t.printStackTrace();
+                callback.onFailure(new RequestManager.RequestException("An error has occurred"));
+            }
+        });
+    }
+
+    public void getRegionBoundsLocality(double latitude, double longitude, final RequestCallback<LatLngBounds> callback ){
+
+        try {
+            checkConnection();
+        } catch (ConnectionException e) {
+            e.printStackTrace();
+            // callback.onFailure(e);
+            return;
+        }
+
+        String language = "en";
+        String sensor = "false";
+        String result_type = "locality";
+        String key = "AIzaSyBxL5CwUDj15cnfFP0PbEr0k8nq6Po3gEw";
+        String latlng = String.valueOf(latitude) + "," + String.valueOf(longitude);
+
+
+        Call<String> getBoundsCall = googleApiService.getRegionBounds(language, sensor, latlng, result_type, key);
+
+        getBoundsCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body());
+                        LatLngBounds latLngBounds = JSONParserHelper.parseRegionBounds(jsonObject);
+                        callback.onResponse(latLngBounds);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        callback.onFailure(new RequestManager.RequestException("An error has occurred"));
+                    }
+                } else {
+                    Log.e("request", response.errorBody().toString());
+                    callback.onFailure(new RequestManager.RequestException("An error has occurred"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                t.printStackTrace();
+                callback.onFailure(new RequestManager.RequestException("An error has occurred"));
             }
         });
     }

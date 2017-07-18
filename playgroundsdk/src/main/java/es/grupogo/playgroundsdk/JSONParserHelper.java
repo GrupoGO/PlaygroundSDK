@@ -1,6 +1,8 @@
 package es.grupogo.playgroundsdk;
 
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -40,6 +42,23 @@ public class JSONParserHelper {
         }
         action.setCategories(categoriesString);
         return action;
+    }
+
+    public static LatLngBounds parseRegionBounds(JSONObject jsonObject) throws JSONException {
+        JSONArray resultsArrayObject = jsonObject.getJSONArray("results");
+        JSONObject resultsObject = resultsArrayObject.getJSONObject(0);
+        JSONObject geometryObject = resultsObject.optJSONObject("geometry");
+        JSONObject boundsObject = geometryObject.optJSONObject("bounds");
+        //northeast
+        JSONObject northeastObject = boundsObject.optJSONObject("northeast");
+        LatLng latLngNortheast = new LatLng(Double.parseDouble(northeastObject.optString("lat")),
+                Double.parseDouble(northeastObject.optString("lng")));
+        //southwest
+        JSONObject southwestObject = boundsObject.optJSONObject("southwest");
+        LatLng latLngSouthwest = new LatLng(Double.parseDouble(southwestObject.optString("lat")),
+                Double.parseDouble(southwestObject.optString("lng")));
+        return new LatLngBounds(latLngSouthwest, latLngNortheast);
+
     }
 
 }
