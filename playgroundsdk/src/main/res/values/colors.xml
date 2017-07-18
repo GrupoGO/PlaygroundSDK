@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPG1">#CC0000</color>
+    <color name="colorPG2">#F6E345</color>
+    <color name="colorPG3">#B1DE8C</color>
+    <color name="colorPG4">#28A5B8</color>
+    <color name="colorPG5">#FDDCA3</color>
+    <color name="colorPG6">#FC9494</color>
+
+</resources>
