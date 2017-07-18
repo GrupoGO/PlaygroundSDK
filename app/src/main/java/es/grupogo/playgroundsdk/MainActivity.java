@@ -35,25 +35,4 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    /**  @Override
-    protected void onResume() {
-        super.onResume();
-        if(actions==null){
-            pagerView.reloadActions();
-        } else {
-            pagerView.setActions(actions);
-        }
-    }
-
-   @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("actions", (ArrayList<Action>) pagerView.getActions());
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        actions = savedInstanceState.getParcelableArrayList("actions");
-    }**/
 }
