@@ -10,7 +10,6 @@ import es.grupogo.playgroundsdk.widget.ActionsPagerView;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<Action> actions;
     ActionsPagerView pagerView;
 
 
@@ -28,11 +27,6 @@ public class MainActivity extends AppCompatActivity {
       //  pagerView.setPosition(40.489353842, -3.6827461);
       //  pagerView.reloadActions();
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
 }
