@@ -10,7 +10,6 @@ import es.grupogo.playgroundsdk.widget.ActionsPagerView;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<Action> actions;
     ActionsPagerView pagerView;
 
 
@@ -26,28 +25,8 @@ public class MainActivity extends AppCompatActivity {
        // pagerView.setNumActions(3);
        // pagerView.setQuery("animals");
       //  pagerView.setPosition(40.489353842, -3.6827461);
+      //  pagerView.reloadActions();
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(actions==null){
-            pagerView.reloadActions();
-        } else {
-            pagerView.setActions(actions);
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("actions", (ArrayList<Action>) pagerView.getActions());
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        actions = savedInstanceState.getParcelableArrayList("actions");
-    }
 }

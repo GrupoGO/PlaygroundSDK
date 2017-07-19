@@ -12,6 +12,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -21,6 +22,7 @@ import java.util.List;
 import es.grupogo.playgroundsdk.Action;
 import es.grupogo.playgroundsdk.ApiManager;
 import es.grupogo.playgroundsdk.ActionDetailActivity;
+import es.grupogo.playgroundsdk.DoButton;
 import es.grupogo.playgroundsdk.RequestHelper;
 import es.grupogo.playgroundsdk.RequestManager;
 import es.grupogo.playgroundsdk2.R;
@@ -36,6 +38,8 @@ public class ActionsPagerView extends ConstraintLayout{
     private Double latitude;
     private Double longitude;
     private ActionsRecyclerAdapter adapter;
+    private List<Action> savedActions;
+
 
     private ActionViewHolder.OnActionClickListener listener = new ActionViewHolder.OnActionClickListener() {
         @Override
@@ -94,6 +98,9 @@ public class ActionsPagerView extends ConstraintLayout{
 
         inflate(getContext(), R.layout.widget_pager_actions, this);
 
+        //Enable saveInstance
+        setSaveEnabled(true);
+
         if (attrs!=null) {
             // Go through all custom attrs.
             TypedArray a = getContext().getTheme().obtainStyledAttributes(
@@ -144,15 +151,6 @@ public class ActionsPagerView extends ConstraintLayout{
         this.query = query;
     }
 
-    public void setNumActions(int numActions) {
-        this.numActions = numActions;
-    }
-
-    public void setPosition(Double latitude, Double longitude){
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
     public void reloadActions() {
         if(latitude!=null && longitude!=null){ //WITH LOCATION
             ApiManager.getInstance(getContext()).getActionsInBounds(query, numActions, null, null, null, null, latitude, longitude, new ApiManager.ApiCallback<List<Action>>() {
@@ -187,5 +185,87 @@ public class ActionsPagerView extends ConstraintLayout{
 
     public void setActions(List<Action> actions){
         adapter.setActions(actions);
+    }
+
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+
+        Parcelable superState = super.onSaveInstanceState();
+        ActionsPagerView.SavedState ss = new ActionsPagerView.SavedState(superState);
+        ss.actions = adapter.getActions();
+
+        return ss;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+
+        ActionsPagerView.SavedState ss = (ActionsPagerView.SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        savedActions = ss.actions;
+
+    }
+
+    @Override
+    protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
+        // As we save our own instance state, ensure our children don't save and restore their state as well.
+        super.dispatchFreezeSelfOnly(container);
+    }
+
+    @Override
+    protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container) {
+        super.dispatchThawSelfOnly(container);
+    }
+
+    //Like OnResume (this method is called after OnRestoreInstanceState
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        if(this.savedActions==null){
+            reloadActions();
+        } else {
+            adapter.setActions(this.savedActions);
+        }
+
+    }
+
+    private static class SavedState extends BaseSavedState {
+
+        List<Action> actions;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in, ClassLoader classLoader) {
+            super(in);
+            actions = in.readArrayList(classLoader);
+
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeTypedList(actions);
+        }
+
+        public static final Parcelable.Creator<ActionsPagerView.SavedState> CREATOR
+                = new ClassLoaderCreator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel parcel, ClassLoader classLoader) {
+                return createFromParcel(parcel, null);
+            }
+
+            @Override
+            public ActionsPagerView.SavedState createFromParcel(Parcel source) {
+                return createFromParcel(source, null);
+            }
+
+            public ActionsPagerView.SavedState[] newArray(int size) {
+                return new ActionsPagerView.SavedState[size];
+            }
+        };
     }
 }
