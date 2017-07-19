@@ -89,12 +89,15 @@ public class ActionViewHolder extends RecyclerView.ViewHolder {
 
         mTagContainerLayout = (TagContainerLayout)itemView.findViewById(R.id.tagContainerLayout);
 
-        if (buttonPledge != null) {
+
+        itemView.setOnClickListener(listener);
+
+        /*if (buttonPledge != null) {
 
             buttonPledge.setOnClickListener(listener);
         } else {
             itemView.setOnClickListener(listener);
-        }
+        }*/
     }
 
     public void bind(final Action action, boolean deleteable) {

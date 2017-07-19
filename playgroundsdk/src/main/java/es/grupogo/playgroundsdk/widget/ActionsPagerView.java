@@ -49,9 +49,22 @@ public class ActionsPagerView extends ConstraintLayout{
             }
             getContext().startActivity(browserIntent);*/
 
-            Intent intent = new Intent(getContext(), ActionDetailActivity.class);
-            intent.putExtra(ActionDetailActivity.EXTRA_ACTION, action);
-            getContext().startActivity(intent);
+            Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage("com.playground.dotech");
+            if (launchIntent != null) {
+
+                Intent intent = new Intent();
+                intent.setClassName("com.playground.dotech", "es.grupogo.playground.activities.ExternAccessActivity");
+
+                // If "package" extra is set, app will be able to show your app name as a title
+                intent.putExtra("extra_action_id", action.getId());
+                getContext().startActivity(intent);
+
+                //getContext().startActivity(launchIntent);//null pointer check in case package name was not found
+            } else {
+                Intent intent = new Intent(getContext(), ActionDetailActivity.class);
+                intent.putExtra(ActionDetailActivity.EXTRA_ACTION, action);
+                getContext().startActivity(intent);
+            }
         }
 
         @Override
