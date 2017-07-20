@@ -17,10 +17,6 @@
     <es.grupogo.playgroundsdk.widget.ActionsPagerView
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:query_widget=""
-        app:num_actions_widget="3"
-        app:latitude_widget="40.489353842"
-        app:longitude_widget="-3.6827461"/>
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

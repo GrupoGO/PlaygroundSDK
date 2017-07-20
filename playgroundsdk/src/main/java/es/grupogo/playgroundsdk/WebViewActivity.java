@@ -33,8 +33,11 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
 
-        //ActionBar actionBar = UtilsHelper.setupToolbar(this, (Toolbar) findViewById(R.id.toolbar), getIntent().getStringExtra(EXTRA_TITLE), null);
-        //actionBar.setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
+
+        webView = (WebView) findViewById(R.id.web_view);
 
         url = getIntent().getStringExtra(EXTRA_URL);
         if (url!=null) {
@@ -93,10 +96,8 @@ public class WebViewActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
+        if (item.getItemId()==android.R.id.home) {
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }

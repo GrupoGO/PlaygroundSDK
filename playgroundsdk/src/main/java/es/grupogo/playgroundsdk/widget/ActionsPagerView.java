@@ -151,6 +151,15 @@ public class ActionsPagerView extends ConstraintLayout{
         this.query = query;
     }
 
+    public void setNumActions(int numActions) {
+        this.numActions = numActions;
+    }
+
+    public void setPosition(Double latitude, Double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public void reloadActions() {
         if(latitude!=null && longitude!=null){ //WITH LOCATION
             ApiManager.getInstance(getContext()).getActionsInBounds(query, numActions, null, null, null, null, latitude, longitude, new ApiManager.ApiCallback<List<Action>>() {

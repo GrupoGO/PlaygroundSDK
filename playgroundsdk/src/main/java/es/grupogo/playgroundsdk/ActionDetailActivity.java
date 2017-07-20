@@ -73,6 +73,16 @@ public class ActionDetailActivity extends AppCompatActivity  {
             }
         });
 
+        textViewPledge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ActionDetailActivity.this, WebViewActivity.class);
+                intent.putExtra(WebViewActivity.EXTRA_URL, action.getUrl());
+                intent.putExtra(WebViewActivity.EXTRA_TITLE, "");
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void bind() {
