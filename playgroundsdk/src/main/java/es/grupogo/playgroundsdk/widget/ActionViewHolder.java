@@ -162,7 +162,7 @@ public class ActionViewHolder extends RecyclerView.ViewHolder {
 
         if (buttonPledge != null) {
 
-            int colorBg = ContextCompat.getColor(itemView.getContext(), action.getShortTypeColor());
+            /*int colorBg = ContextCompat.getColor(itemView.getContext(), action.getShortTypeColor());
             int color = Color.WHITE;
 
             buttonPledge.setTextColor(color);
@@ -170,7 +170,7 @@ public class ActionViewHolder extends RecyclerView.ViewHolder {
             Drawable backgroundDrawable = buttonPledge.getBackground();
             if (backgroundDrawable != null) {
                 UtilsHelper.tintDrawable(backgroundDrawable, colorBg);
-            }
+            }*/
 
             buttonPledge.setText(itemView.getContext().getString(action.getShortType()));
             //buttonPledge.setCompoundDrawablesWithIntrinsicBounds(UtilsHelper.tintDrawable(doIcon, color), null, null, null);

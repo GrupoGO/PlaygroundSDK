@@ -1,19 +1,19 @@
 <resources>
     <string name="app_name">PlayGround DO SDK</string>
 
-    <string name="type_sign">SIGN</string>
-    <string name="type_learn">LEARN</string>
-    <string name="type_think">THINK</string>
-    <string name="type_participate">PARTICIPATE</string>
-    <string name="type_assist">ASSIST</string>
-    <string name="type_donate">DONATE</string>
-    <string name="type_pledge">PLEDGE</string>
-    <string name="type_share">SHARE</string>
-    <string name="type_adopt">ADOPT</string>
-    <string name="type_contribute">CONTRIBUTE</string>
-    <string name="type_do">DO</string>
+    <string name="type_sign">Sign</string>
+    <string name="type_learn">Learn</string>
+    <string name="type_think">Think</string>
+    <string name="type_participate">Participate</string>
+    <string name="type_assist">Assist</string>
+    <string name="type_donate">Donate</string>
+    <string name="type_pledge">Pledge</string>
+    <string name="type_share">Share</string>
+    <string name="type_adopt">Adopt</string>
+    <string name="type_contribute">Contribute</string>
+    <string name="type_do">Do</string>
 
-    <string name="type_default">DO</string>
+    <string name="type_default">Do</string>
 
 
 

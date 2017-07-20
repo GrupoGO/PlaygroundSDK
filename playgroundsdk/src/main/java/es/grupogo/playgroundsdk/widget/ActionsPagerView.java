@@ -141,7 +141,7 @@ public class ActionsPagerView extends ConstraintLayout{
 
     private void setupRecycler() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        adapter = new ActionsRecyclerAdapter(getContext(), R.layout.list_item_action, listener);
+        adapter = new ActionsRecyclerAdapter(getContext(), R.layout.list_item_action_web, listener);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);

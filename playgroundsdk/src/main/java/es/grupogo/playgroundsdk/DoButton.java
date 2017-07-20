@@ -147,7 +147,7 @@ public class DoButton extends AppCompatImageView implements View.OnClickListener
     }
 
     public void setDrawableTint(int color) {
-        Drawable d = ContextCompat.getDrawable(getContext(), R.drawable.do_24dp);
+        Drawable d = ContextCompat.getDrawable(getContext(), R.drawable.ic_do_24dp_white);
         DrawableUtils.tintDrawable(d, color);
         setImageDrawable(d);
         invalidate();
