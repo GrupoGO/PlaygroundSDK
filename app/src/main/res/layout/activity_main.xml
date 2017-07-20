@@ -7,16 +7,10 @@
     android:layout_height="match_parent"
     tools:context="es.grupogo.playgroundsdk.MainActivity">
 
-    <es.grupogo.playgroundsdk.DoButton
-        android:id="@+id/button_do"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        app:tint="#feafea"
-        app:query="android"/>
 
     <es.grupogo.playgroundsdk.widget.ActionsPagerView
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
